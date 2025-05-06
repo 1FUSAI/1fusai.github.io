@@ -3,43 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FUSAI</title>
+    <title>Сайт с чёрным экраном-прелоадером</title>
     <style>
-        /* Основные стили */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            opacity: 0; /* Начальная прозрачность (сайт невидим) */
-            animation: fadeIn 5s ease-in-out forwards; /* Анимация появления */
-        }
-        
-        /* Чёрный экран (прелоадер) */
-        #preloader {
+	
+	@font-face {
+    font-family: RuneScape; /* Гарнитура шрифта */
+    src: url(Assets\RuneScape.ttf)
+		}
+		
+        /* Стиль для чёрного экрана (изображение) */
+        #black-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #000000;
+            object-fit: cover;
             z-index: 9999;
-            animation: fadeOut 5s ease-in-out forwards;
+            animation: fadeOut 1s ease-in-out 3s forwards;
         }
         
-        /* Анимация исчезновения чёрного экрана */
+        /* Гифка поверх чёрного экрана */
+        #preloader-gif {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            z-index: 10000;
+            animation: fadeOut 1s ease-in-out 2s forwards;
+        }
+        
+        /* Основные стили */
+        body {
+            font-family: RuneScape, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+	
+        }
+		
+		/* Контейнер заголовка с гифками */
+        .header-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 40px 0;
+            background: linear-gradient(45deg, #333, #555);
+        }
+
+        /* Гифки по бокам */
+        .header-gif {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        /* Огромный заголовок */
+        h1 {
+		font-family: RuneScape;
+            font-size: 5rem;
+            color: #fff;
+            margin: 0;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
         @keyframes fadeOut {
             0% { opacity: 1; }
-            100% { opacity: 0; display: none; }
+            100% { opacity: 0; visibility: hidden; }
         }
-        
-        /* Анимация появления сайта */
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
-        
-        /* Остальные стили (как в прошлом примере) */
         header {
             background: #333;
             color: #fff;
@@ -67,18 +108,25 @@
             bottom: 0;
             width: 100%;
         }
+		
     </style>
 </head>
 <body>
     <!-- Чёрный экран -->
+	<!-- Чёрный экран как изображение (гарантированно чёрный) -->
+    <img id="black-screen" src="Assets\1920x1080-black-solid-color-background.jpg" alt="">
     <div id="preloader"></div>
 	<img id="preloader-gif" src="Assets\Skull.gif">
+	
+	 <!-- Шапка с гифками -->
+    <div class="header-container">
+        <img class="header-gif" src="Assets\Pixel Lol Sticker.gif" alt="Левая гифка">
+		<font face="RuneScape"><h1>МОЙ КРУТОЙ САЙТ</h1></font>
+        
+        <img class="header-gif" src="Assets\Pixel Lol Sticker.gif" alt="Правая гифка">
+    </div>
     
     <!-- Основное содержимое сайта -->
-    <header>
-        <h1>Йо</h1>
-		<h1>Это FUSAI<h1>
-    </header>
     <nav>
         <a href="#home">Главная</a>
         <a href="#about">О нас</a>
