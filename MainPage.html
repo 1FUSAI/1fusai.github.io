@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUSAI</title>
+    <style>
+        /* Основные стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            opacity: 0; /* Начальная прозрачность (сайт невидим) */
+            animation: fadeIn 5s ease-in-out forwards; /* Анимация появления */
+        }
+        
+        /* Чёрный экран (прелоадер) */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 9999;
+            animation: fadeOut 5s ease-in-out forwards;
+        }
+        
+        /* Анимация исчезновения чёрного экрана */
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+        
+        /* Анимация появления сайта */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        /* Остальные стили (как в прошлом примере) */
+        header {
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background: #444;
+            padding: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        main {
+            padding: 20px;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Чёрный экран -->
+    <div id="preloader"></div>
+	<img id="preloader-gif" src="Assets\Skull.gif">
+    
+    <!-- Основное содержимое сайта -->
+    <header>
+        <h1>Йо</h1>
+		<h1>Это FUSAI<h1>
+    </header>
+    <nav>
+        <a href="#home">Главная</a>
+        <a href="#about">О нас</a>
+        <a href="#contact">Контакты</a>
+    </nav>
+    <main>
+        <section id="home">
+            <h2>Главная</h2>
+            <p>Этот сайт плавно появляется из темноты!</p>
+        </section>
+        <section id="about">
+            <h2>О нас</h2>
+            <p>Мы создаём крутые анимации для сайтов.</p>
+        </section>
+        <section id="contact">
+            <h2>Контакты</h2>
+            <p>Пишите: example@email.com</p>
+        </section>
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+</html>
