@@ -222,6 +222,10 @@
             padding: 25px 10px;
             text-align: center;
             position: relative;
+            min-height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         @keyframes fadeOut {
@@ -275,6 +279,7 @@
         .button-container {
             position: relative;
             display: inline-block;
+            height: 80px;
         }
     </style>
 </head>
@@ -459,13 +464,14 @@
             // Вставляем взрыв в контейнер кнопки
             buttonContainer.appendChild(explosion);
             
-            // Скрываем кнопку
-            infoButton.style.display = 'none';
+            // Скрываем кнопку (но оставляем контейнер)
+            infoButton.style.visibility = 'hidden';
             
-            // Удаляем взрыв и кнопку через 1 секунду
+            // Удаляем взрыв через 1 секунду
             setTimeout(() => {
                 explosion.remove();
-                infoButton.remove();
+                // Вместо удаления кнопки просто делаем её невидимой
+                infoButton.style.display = 'none';
             }, 1000);
         }
         
@@ -502,7 +508,7 @@
                 rakeAudioTimeout = setTimeout(() => {
                     rakeAudio.currentTime = 0;
                     rakeAudio.play();
-                }, 1000); // Задержка 1 секунда
+                }, 1000);
             } else {
                 if (!oceanManAudio.paused) fadeOutAudio(oceanManAudio);
                 if (!rakeAudio.paused) fadeOutAudio(rakeAudio);
