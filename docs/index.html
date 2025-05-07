@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FUSAI</title>
     <style>
-	
-	@font-face {
-    font-family: RuneScape; /* Гарнитура шрифта */
-    src: url(Assets\RuneScape.ttf)
-		}
-		
-        /* Стиль для чёрного экрана (изображение) */
+        @font-face {
+            font-family: RuneScape;
+            src: url(RuneScape.ttf);
+        }
+        
         #black-screen {
             position: fixed;
             top: 0;
@@ -23,7 +21,6 @@
             animation: fadeOut 1s ease-in-out 3s forwards;
         }
         
-        /* Гифка поверх чёрного экрана */
         #preloader-gif {
             position: fixed;
             top: 50%;
@@ -35,119 +32,510 @@
             animation: fadeOut 1s ease-in-out 2s forwards;
         }
         
-        /* Основные стили */
         body {
             font-family: RuneScape, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
             opacity: 0;
-            animation: fadeIn 1s forwards;
-	
+            animation: fadeIn 0.1s forwards;
         }
-		
-		/* Контейнер заголовка с гифками */
+        
         .header-container {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 20px;
-            padding: 40px 0;
-            background: linear-gradient(45deg, #333, #555);
+            padding: 60px 0;
+            background-image: url('Blur Elevation.gif');
+            background-repeat: repeat;
+            background-size: 480px 270px;
+            min-height: 200px;
+            position: relative;
+        }
+        
+        .header-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 1;
         }
 
-        /* Гифки по бокам */
-        .header-gif {
-            width: 150px;
-            height: 150px;
-            object-fit: contain;
-        }
-
-        /* Огромный заголовок */
-        h1 {
-		font-family: RuneScape;
+        .header-container h1 {
             font-size: 5rem;
             color: #fff;
             margin: 0;
             text-align: center;
             letter-spacing: 2px;
+            animation: fadeIn 7s forwards;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-gif {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px 30px;
+            background: white;
+            color: black;
+            font-family: RuneScape;
+            font-size: 2rem;
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Blur Elevation White.gif');
+            background-size: cover;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .nav-button:hover {
+            color: white;
+        }
+        
+        .nav-button:hover::before {
+            opacity: 1;
+        }
+        
+        .nav-button img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-button:hover img {
+            transform: rotate(15deg);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: #111;
+            padding: 50px;
+            border-radius: 10px;
+            width: 85%;
+            height: 75vh;
+            max-width: 1100px;
+            color: white;
+            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.5s ease;
+            border: 3px solid #444;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: #555;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 28px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .close-modal:hover {
+            background: #666;
+            transform: rotate(90deg) scale(1.1);
+        }
+        
+        .modal-content h2 {
+            font-size: 4.5rem;
+            margin-top: 0;
+            margin-bottom: 40px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.4);
+            line-height: 1.2;
+        }
+        
+        .modal-content p {
+            font-size: 2.5rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        nav {
+            background: #000;
+            padding: 25px 10px;
+            text-align: center;
+            position: relative;
         }
 
         @keyframes fadeOut {
             0% { opacity: 1; }
             100% { opacity: 0; visibility: hidden; }
         }
+        
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background: #444;
-            padding: 10px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
+        
         main {
             padding: 20px;
+            margin-bottom: 60px;
+            background-image: url('Glow.gif');
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            min-height: calc(100vh - 400px);
         }
+        
         footer {
             background: #333;
             color: #fff;
             text-align: center;
-            padding: 10px;
+            padding: 15px;
             position: fixed;
             bottom: 0;
             width: 100%;
+            font-size: 1.2rem;
         }
-		
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 60vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .explosion {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .button-container {
+            position: relative;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
-    <!-- Чёрный экран -->
-	<!-- Чёрный экран как изображение (гарантированно чёрный) -->
+    <!-- Прелоадер -->
     <img id="black-screen" src="1920x1080-black-solid-color-background.jpg" alt="">
-    <div id="preloader"></div>
-	<img id="preloader-gif" src="Skull.gif">
-	
-	 <!-- Шапка с гифками -->
+    <img id="preloader-gif" src="Skull.gif">
+    
+    <!-- Аудио -->
+    <audio id="oceanManAudio" src="Ocean Man.mp3" preload="auto"></audio>
+    <audio id="rakeAudio" src="rake.mp3" preload="auto"></audio>
+    <audio id="boomAudio" src="boom.wav" preload="auto"></audio>
+    
+    <!-- Шапка сайта -->
     <div class="header-container">
         <img class="header-gif" src="Pixel Lol Sticker.gif" alt="Левая гифка">
-		<font face="RuneScape"><h1>МОЙ КРУТОЙ САЙТ</h1></font>
-        
+        <h1>Йо, это FUSAI</h1>
         <img class="header-gif" src="Pixel Lol Sticker.gif" alt="Правая гифка">
     </div>
     
-    <!-- Основное содержимое сайта -->
+    <!-- Навигация с кнопкой -->
     <nav>
-        <a href="#home">Главная</a>
-        <a href="#about">О нас</a>
-        <a href="#contact">Контакты</a>
+        <div class="button-container">
+            <button class="nav-button" id="infoButton">
+                Чё это
+                <img src="Question Mark.gif" alt="?">
+            </button>
+        </div>
     </nav>
+    
+    <!-- Модальное окно -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">×</button>
+            <h2 id="modalTitle">ЧЁ ЭТО ВООБЩЕ ТАКОЕ?</h2>
+            <div id="modalContent">
+                <p>Это сайт</p>
+                <p>Вроде сразу понятно</p>
+                <p>Не нажимай эту кнопку много раз, кстати</p>
+                <p>Она пока странно работает</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
     <main>
         <section id="home">
             <h2>Главная</h2>
             <p>Этот сайт плавно появляется из темноты!</p>
         </section>
-        <section id="about">
-            <h2>О нас</h2>
-            <p>Мы создаём крутые анимации для сайтов.</p>
-        </section>
-        <section id="contact">
-            <h2>Контакты</h2>
-            <p>Пишите: example@email.com</p>
-        </section>
     </main>
+    
+    <!-- Подвал -->
     <footer>
-        
+        &copy; FUSAI 2024 | Все права защищены
     </footer>
+
+    <script>
+        // Элементы
+        const infoButton = document.getElementById('infoButton');
+        const buttonContainer = document.querySelector('.button-container');
+        const infoModal = document.getElementById('infoModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const oceanManAudio = document.getElementById('oceanManAudio');
+        const rakeAudio = document.getElementById('rakeAudio');
+        const boomAudio = document.getElementById('boomAudio');
+        
+        // Настройки громкости
+        oceanManAudio.volume = 0.2;    // 20% громкости
+        rakeAudio.volume = 0.05;       // 5% громкости
+        boomAudio.volume = 0.9;        // 90% громкости для взрыва
+        
+        // Варианты контента
+        const contentVariants = [
+            {
+                title: "ЧЁ ЭТО ВООБЩЕ ТАКОЕ?",
+                content: `
+                    <p>Это сайт</p>
+                    <p>Вроде сразу понятно</p>
+                    <p>Не нажимай эту кнопку много раз, кстати</p>
+                    <p>Она пока странно работает</p>
+                `
+            },
+            {
+                title: "Чê ЭТО ВÞЕ ê?",
+                content: `
+                    <p>ЭÞ саζ</p>
+                    <p>ВрØдê сÞу пζàØ</p>
+                    <p>ςе нà эту кнØпку мÞ раз, ксàи</p>
+                    <p>Øна пØка ςàØ ζбØтаς</p>
+                `
+            },
+            {
+                title: "",
+                content: `
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                `
+            },
+            {
+                title: "",
+                content: `
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p>ох зря я туда полез</p>
+                `
+            },
+            {
+                title: "",
+                content: `
+                    <p>🌊 OCEAN MAN 🌊 😍 Take me by the hand ✋ lead me to the land that you understand 🙌</p>
+                    <p>🌊 OCEAN MAN 🌊 😍 The voyage 🚲 to the corner of the 🌎 globe is a real trip 👌</p>
+                    <p>🌊 OCEAN MAN 🌊 😍 The crust of a tan man 👳 imbibed by the sand 👍 Soaking up the 💦 thirst of the land 💯</p>
+                    <p>🌊 OCEAN MAN 🌊 😍Can you see 👀 through the wonder ✨Of amazement 🤯 at the oberman 🕴️</p>
+					<p>🌊 OCEAN MAN 🌊 😍The crust 🥖 is elusive 🏃💨When it casts 🌟 forth to the childlike man 🧒</p>
+					<p>🌊 OCEAN MAN 🌊 😍The sequence 🔄 of a life form 🌱Braised 🍖 in the sand 🏖️</p>
+					<p>Soaking up 💦 the thirst 🌵 of the land 🌎</p>
+                `,
+                playAudio: true
+            },
+            {
+                title: "",
+                content: `
+                    <img src="maltigi.jpg" class="modal-image" alt="Maltigi">
+                `,
+                playRakeAudio: true
+            },
+            {
+                destroyButton: true
+            }
+        ];
+        
+        let currentContentIndex = 0;
+        let audioFadeInterval;
+        let rakeAudioTimeout;
+        
+        // Функция плавного затухания аудио
+        function fadeOutAudio(audioElement) {
+            const fadeDuration = 500;
+            const fadeSteps = 10;
+            const stepTime = fadeDuration / fadeSteps;
+            const initialVolume = audioElement.volume;
+            const stepDecrease = initialVolume / fadeSteps;
+            
+            clearInterval(audioFadeInterval);
+            
+            audioFadeInterval = setInterval(() => {
+                if (audioElement.volume > stepDecrease) {
+                    audioElement.volume -= stepDecrease;
+                } else {
+                    audioElement.pause();
+                    audioElement.currentTime = 0;
+                    // Восстанавливаем оригинальную громкость
+                    if (audioElement === oceanManAudio) {
+                        audioElement.volume = 0.2;
+                    } else if (audioElement === rakeAudio) {
+                        audioElement.volume = 0.05;
+                    } else if (audioElement === boomAudio) {
+                        audioElement.volume = 0.9;
+                    }
+                    clearInterval(audioFadeInterval);
+                }
+            }, stepTime);
+        }
+        
+        // Функция взрыва кнопки
+        function explodeButton() {
+            // Создаем элемент с гифкой взрыва
+            const explosion = document.createElement('img');
+            explosion.src = 'boom.gif';
+            explosion.className = 'explosion';
+            
+            // Воспроизводим звук взрыва
+            boomAudio.currentTime = 0;
+            boomAudio.play();
+            
+            // Вставляем взрыв в контейнер кнопки
+            buttonContainer.appendChild(explosion);
+            
+            // Скрываем кнопку
+            infoButton.style.display = 'none';
+            
+            // Удаляем взрыв и кнопку через 1 секунду
+            setTimeout(() => {
+                explosion.remove();
+                infoButton.remove();
+            }, 1000);
+        }
+        
+        // Функция обновления контента
+        function updateModalContent() {
+            // Если это 7-й вариант (индекс 6), взрываем кнопку и выходим
+            if (currentContentIndex === 6) {
+                explodeButton();
+                // Выключаем все аудио, кроме звука взрыва
+                if (!oceanManAudio.paused) fadeOutAudio(oceanManAudio);
+                if (!rakeAudio.paused) fadeOutAudio(rakeAudio);
+                clearTimeout(rakeAudioTimeout);
+                return;
+            }
+            
+            const variant = contentVariants[currentContentIndex];
+            modalTitle.textContent = variant.title || '';
+            modalContent.innerHTML = variant.content || '';
+            
+            infoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Обработка аудио эффектов
+            clearTimeout(rakeAudioTimeout);
+            
+            if (variant.playAudio) {
+                oceanManAudio.currentTime = 0;
+                oceanManAudio.play();
+                if (!rakeAudio.paused) fadeOutAudio(rakeAudio);
+                if (!boomAudio.paused) fadeOutAudio(boomAudio);
+            } else if (variant.playRakeAudio) {
+                if (!oceanManAudio.paused) fadeOutAudio(oceanManAudio);
+                if (!boomAudio.paused) fadeOutAudio(boomAudio);
+                rakeAudioTimeout = setTimeout(() => {
+                    rakeAudio.currentTime = 0;
+                    rakeAudio.play();
+                }, 1000); // Задержка 1 секунда
+            } else {
+                if (!oceanManAudio.paused) fadeOutAudio(oceanManAudio);
+                if (!rakeAudio.paused) fadeOutAudio(rakeAudio);
+                if (!boomAudio.paused) fadeOutAudio(boomAudio);
+            }
+            
+            currentContentIndex = (currentContentIndex + 1) % contentVariants.length;
+        }
+        
+        // Обработчик клика по кнопке
+        infoButton.addEventListener('click', updateModalContent);
+        
+        // Закрытие модального окна
+        closeModal.addEventListener('click', () => {
+            infoModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            if (!oceanManAudio.paused) fadeOutAudio(oceanManAudio);
+            if (!rakeAudio.paused) fadeOutAudio(rakeAudio);
+            if (!boomAudio.paused) fadeOutAudio(boomAudio);
+            clearTimeout(rakeAudioTimeout);
+        });
+        
+        // Закрытие при клике вне окна
+        infoModal.addEventListener('click', (e) => {
+            if (e.target === infoModal) {
+                infoModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                if (!oceanManAudio.paused) fadeOutAudio(oceanManAudio);
+                if (!rakeAudio.paused) fadeOutAudio(rakeAudio);
+                if (!boomAudio.paused) fadeOutAudio(boomAudio);
+                clearTimeout(rakeAudioTimeout);
+            }
+        });
+    </script>
 </body>
 </html>
